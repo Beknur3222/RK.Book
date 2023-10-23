@@ -20,7 +20,7 @@ namespace RK.Book
 
         public override string ToString()
         {
-            return $"Title: {Title}, Author: {Author}";
+            return $"Название: {Title}, Автор: {Author}";
         }
     }
 
@@ -42,11 +42,11 @@ namespace RK.Book
                 Console.WriteLine("1. Добавить книгу");
                 Console.WriteLine("2. Удалить книгу");
                 Console.WriteLine("3. Сохранить библиотеку");
-                Console.WriteLine("4. Выйти");
+                Console.WriteLine("4. Сохранить и выйти");
 
-                string choice = Console.ReadLine();
+                string n = Console.ReadLine();
 
-                switch (choice)
+                switch (n)
                 {
                     case "1":
                         AddBook();

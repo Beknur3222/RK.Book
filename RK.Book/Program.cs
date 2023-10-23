@@ -29,44 +29,6 @@ namespace RK.Book
         static List<Book> library = new List<Book>();
         static string fileName = "library.txt";
 
-        static void Main(string[] args)
-        {
-            LoadLibrary();
-
-            while (true)
-            {
-                Console.WriteLine("Библиотека:");
-                ShowLibrary();
-
-                Console.WriteLine("\nВыберите действие:");
-                Console.WriteLine("1. Добавить книгу");
-                Console.WriteLine("2. Удалить книгу");
-                Console.WriteLine("3. Сохранить библиотеку");
-                Console.WriteLine("4. Сохранить и выйти");
-
-                string n = Console.ReadLine();
-
-                switch (n)
-                {
-                    case "1":
-                        AddBook();
-                        break;
-                    case "2":
-                        RemoveBook();
-                        break;
-                    case "3":
-                        SaveLibrary();
-                        break;
-                    case "4":
-                        SaveLibrary();
-                        return;
-                    default:
-                        Console.WriteLine("Неверный выбор. Попробуйте еще раз.");
-                        break;
-                }
-            }
-        }
-
         static void AddBook()
         {
             Console.WriteLine("Введите название книги:");
@@ -127,6 +89,43 @@ namespace RK.Book
                         Book book = new Book(title, author);
                         library.Add(book);
                     }
+                }
+            }
+        }
+        static void Main(string[] args)
+        {
+            LoadLibrary();
+
+            while (true)
+            {
+                Console.WriteLine("Библиотека:");
+                ShowLibrary();
+
+                Console.WriteLine("\nВыберите действие:");
+                Console.WriteLine("1. Добавить книгу");
+                Console.WriteLine("2. Удалить книгу");
+                Console.WriteLine("3. Сохранить библиотеку");
+                Console.WriteLine("4. Сохранить и выйти");
+
+                string n = Console.ReadLine();
+
+                switch (n)
+                {
+                    case "1":
+                        AddBook();
+                        break;
+                    case "2":
+                        RemoveBook();
+                        break;
+                    case "3":
+                        SaveLibrary();
+                        break;
+                    case "4":
+                        SaveLibrary();
+                        return;
+                    default:
+                        Console.WriteLine("Неверный выбор. Попробуйте еще раз.");
+                        break;
                 }
             }
         }

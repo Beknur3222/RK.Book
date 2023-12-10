@@ -11,16 +11,20 @@ namespace RK.Book
     {
         public string Title { get; set; }
         public string Author { get; set; }
+        public int Year { get; set; }
+        public string Genre { get; set; }
 
-        public Book(string title, string author)
+        public Book(string title, string author, int year, string genre)
         {
             Title = title;
             Author = author;
+            Year = year;
+            Genre = genre;
         }
 
         public override string ToString()
         {
-            return $"Название: {Title}, Автор: {Author}";
+            return $"Название: {Title}, Автор: {Author}, Год выпуска: {Year}, Жанр: {Genre}";
         }
     }
 
@@ -37,8 +41,19 @@ namespace RK.Book
             Console.WriteLine("Введите автора книги:");
             string author = Console.ReadLine();
 
-            Book book = new Book(title, author);
-            library.Add(book);
+            Console.WriteLine("Введите год выпуска:");
+            if (int.TryParse(Console.ReadLine(), out int year))
+            {
+                Console.WriteLine("Введите жанр:");
+                string genre = Console.ReadLine();
+
+                Book book = new Book(title, author, year, genre);
+                library.Add(book);
+            }
+            else
+            {
+                Console.WriteLine("Неверный формат года.");
+            }
         }
 
         static void RemoveBook()
@@ -68,7 +83,7 @@ namespace RK.Book
             {
                 foreach (var book in library)
                 {
-                    writer.WriteLine($"{book.Title},{book.Author}");
+                    writer.WriteLine($"{book.Title},{book.Author},{book.Year},{book.Genre}");
                 }
             }
             Console.WriteLine("Библиотека сохранена.");
@@ -82,15 +97,36 @@ namespace RK.Book
                 foreach (var line in lines)
                 {
                     string[] parts = line.Split(',');
-                    if (parts.Length == 2)
+                    if (parts.Length == 4)
                     {
                         string title = parts[0];
                         string author = parts[1];
-                        Book book = new Book(title, author);
-                        library.Add(book);
+                        if (int.TryParse(parts[2], out int year))
+                        {
+                            string genre = parts[3];
+                            Book book = new Book(title, author, year, genre);
+                            library.Add(book);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Неверный формат года в строке: {line}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Неверный формат строки: {line}");
                     }
                 }
             }
+        }
+
+        static void DisplayMenu()
+        {
+            Console.WriteLine("\nВыберите действие:");
+            Console.WriteLine("1. Добавить книгу");
+            Console.WriteLine("2. Удалить книгу");
+            Console.WriteLine("3. Сохранить библиотеку");
+            Console.WriteLine("4. Выйти");
         }
         static void Main(string[] args)
         {
@@ -98,18 +134,15 @@ namespace RK.Book
 
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("Библиотека:");
                 ShowLibrary();
 
-                Console.WriteLine("\nВыберите действие:");
-                Console.WriteLine("1. Добавить книгу");
-                Console.WriteLine("2. Удалить книгу");
-                Console.WriteLine("3. Сохранить библиотеку");
-                Console.WriteLine("4. Сохранить и выйти");
+                DisplayMenu();
 
-                string n = Console.ReadLine();
+                string choice = Console.ReadLine();
 
-                switch (n)
+                switch (choice)
                 {
                     case "1":
                         AddBook();
@@ -119,9 +152,12 @@ namespace RK.Book
                         break;
                     case "3":
                         SaveLibrary();
+                        Console.WriteLine("Нажмите Enter чтобы продолжить.");
+                        Console.ReadLine();
                         break;
                     case "4":
-                        SaveLibrary();
+                        Console.WriteLine("Нажмите Enter для выхода.");
+                        Console.ReadLine();
                         return;
                     default:
                         Console.WriteLine("Неверный выбор. Попробуйте еще раз.");
